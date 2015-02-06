@@ -13,10 +13,22 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
+  var startVC: StartViewController!
 
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     // Override point for customization after application launch.
+    
+    window = UIWindow(frame: UIScreen.mainScreen().bounds)
+    
+    window!.backgroundColor = UIColor.whiteColor()
+    startVC = StartViewController(nibName: "StartViewController", bundle: nil)
+    startVC.view.frame = window!.frame;
+    //let nav = UINavigationController(rootViewController: startVC)
+
+    window!.rootViewController = startVC
+    window!.makeKeyAndVisible()
+    
     return true
   }
 
