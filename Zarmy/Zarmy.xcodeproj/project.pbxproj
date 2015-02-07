@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		5210B05E1A85633500D83384 /* StartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5210B05D1A85633500D83384 /* StartViewController.xib */; };
+		5210B0611A8617EF00D83384 /* toddler@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5210B05F1A8617EF00D83384 /* toddler@2x.png */; };
+		5210B0621A8617EF00D83384 /* zarmy-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5210B0601A8617EF00D83384 /* zarmy-logo@2x.png */; };
 		52B953801A850649009AF375 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B9537F1A850649009AF375 /* StartViewController.swift */; };
-		52B953851A853F31009AF375 /* start-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B953841A853F31009AF375 /* start-bg.png */; };
+		52B953851A853F31009AF375 /* start-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B953841A853F31009AF375 /* start-bg@2x.png */; };
 		5F100BFCD1871D0817269979 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BEE7AE2913575E5A645436D /* libPods.a */; };
 		D9A9050B1A84EDC500465A0A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A9050A1A84EDC500465A0A /* AppDelegate.swift */; };
 		D9A9050E1A84EDC500465A0A /* Zarmy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D9A9050C1A84EDC500465A0A /* Zarmy.xcdatamodeld */; };
@@ -33,8 +35,10 @@
 		2BEE7AE2913575E5A645436D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		31A3AFE3B9CDC7A1396095AD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		5210B05D1A85633500D83384 /* StartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StartViewController.xib; sourceTree = "<group>"; };
+		5210B05F1A8617EF00D83384 /* toddler@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toddler@2x.png"; sourceTree = "<group>"; };
+		5210B0601A8617EF00D83384 /* zarmy-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zarmy-logo@2x.png"; sourceTree = "<group>"; };
 		52B9537F1A850649009AF375 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
-		52B953841A853F31009AF375 /* start-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "start-bg.png"; sourceTree = "<group>"; };
+		52B953841A853F31009AF375 /* start-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "start-bg@2x.png"; sourceTree = "<group>"; };
 		D9A905051A84EDC500465A0A /* Zarmy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zarmy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9A905091A84EDC500465A0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9A9050A1A84EDC500465A0A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -76,7 +80,9 @@
 		52B953831A853F31009AF375 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				52B953841A853F31009AF375 /* start-bg.png */,
+				5210B05F1A8617EF00D83384 /* toddler@2x.png */,
+				5210B0601A8617EF00D83384 /* zarmy-logo@2x.png */,
+				52B953841A853F31009AF375 /* start-bg@2x.png */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -234,8 +240,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9A905181A84EDC500465A0A /* LaunchScreen.xib in Resources */,
+				5210B0611A8617EF00D83384 /* toddler@2x.png in Resources */,
 				5210B05E1A85633500D83384 /* StartViewController.xib in Resources */,
-				52B953851A853F31009AF375 /* start-bg.png in Resources */,
+				52B953851A853F31009AF375 /* start-bg@2x.png in Resources */,
+				5210B0621A8617EF00D83384 /* zarmy-logo@2x.png in Resources */,
 				D9A905151A84EDC500465A0A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
