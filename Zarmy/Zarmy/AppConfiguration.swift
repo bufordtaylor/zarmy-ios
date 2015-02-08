@@ -11,8 +11,8 @@ class AppConfiguration {
   class var environment: String {
     // comment one or the other return line if you want to run in development or production
     
-//    return "development"
-    return "production"
+    return "development"
+//    return "production"
   }
   
   // MARK: - Environment shorthands

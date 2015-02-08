@@ -14,10 +14,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
   var startVC: StartViewController!
+  internal var currentlyReachable = true
 
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     // Override point for customization after application launch.
+    
+    // Google Analytics
+    let gai = GAI.sharedInstance()
+    gai.trackUncaughtExceptions = false
+    gai.dispatchInterval = 5
+    gai.logger.logLevel = GAILogLevel.Warning
+    gai.trackerWithTrackingId(AppConfiguration.googleAnalyticsTrackingID)
+    gai.optOut = AppConfiguration.developmentEnvironment
+    
+    // Mixpanel
+    let mixpanel = Mixpanel.sharedInstanceWithToken(AppConfiguration.mixpanelToken)
+    mixpanel.track("application:didFinishLaunchingWithOptions", properties: launchOptions)
+    
+    // Facebook
+    FBLoginView.self
+    FBProfilePictureView.self
+    
+    // Reachability
+    let apiClientManager = APIClientManager.sharedInstance
+    let operationQueue = apiClientManager.operationQueue
+    
+    apiClientManager.reachabilityManager.setReachabilityStatusChangeBlock { (status: AFNetworkReachabilityStatus) in
+      switch status {
+      case .ReachableViaWiFi, .ReachableViaWWAN:
+        operationQueue.suspended = false
+      default:
+        operationQueue.suspended = true
+      }
+      
+      self.currentlyReachable = !operationQueue.suspended
+    }
+    
+    if AppConfiguration.productionEnvironment {
+      apiClientManager.reachabilityManager.startMonitoring()
+    }
+
     
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
     
@@ -28,6 +65,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     window!.rootViewController = startVC
     window!.makeKeyAndVisible()
+    
+    
+    
     
     return true
   }

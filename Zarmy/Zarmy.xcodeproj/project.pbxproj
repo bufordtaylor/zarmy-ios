@@ -250,7 +250,7 @@
 				TargetAttributes = {
 					D9A905041A84EDC500465A0A = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = FTW74R2CX6;
+						DevelopmentTeam = ZW25N557NS;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -259,6 +259,7 @@
 					};
 					D9A9051C1A84EDC500465A0A = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = ZW25N557NS;
 						TestTargetID = D9A905041A84EDC500465A0A;
 					};
 				};
@@ -485,6 +486,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Zarmy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Zarmy-Bridging-Header.h";
@@ -500,6 +502,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Zarmy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Zarmy-Bridging-Header.h";

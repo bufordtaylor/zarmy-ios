@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Zarmy. All rights reserved.
 //
 
-class StartViewController: UIViewController {
+class StartViewController: GAITrackedViewController, UIAlertViewDelegate {
   
   @IBOutlet var facebookButton: UIButton!
   @IBOutlet var loginButton: UIButton!
@@ -27,4 +27,83 @@ class StartViewController: UIViewController {
       toddlerWidth.constant = 120.0
     }
   }
+  
+  @IBAction func emailLoginTapped(sender: UIButton) {
+    showLoginAlert("Login", message: "Please enter your email and password")
+  }
+  
+  
+  func showLoginAlert(title: String, message: String, email: String = "") {
+    
+    let alertView = UIAlertView(
+      title: title,
+      message: message,
+      delegate: self,
+      cancelButtonTitle: "Cancel",
+      otherButtonTitles: "Log in")
+    
+    alertView.alertViewStyle = .LoginAndPasswordInput
+    alertView.tag = AlertTags.LoginWithEmail.rawValue
+    
+    alertView.textFieldAtIndex(0)!.placeholder = "Email"
+    alertView.textFieldAtIndex(0)!.text = email
+    
+    alertView.show()
+  }
+  
+  // MARK: - UIAlertView Delegate Methods
+  
+  func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    
+    if buttonIndex == 0 { // cancel
+      return
+    }
+
+    switch AlertTags(rawValue: alertView.tag)! {
+      
+    case .SignupWithEmail:
+      return
+    case .LoginWithEmail:
+      let email = alertView.textFieldAtIndex(0)!.text
+      let password = alertView.textFieldAtIndex(1)!.text
+      
+      let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+      hud.labelText = "Logging in ..."
+      hud.dimBackground = true
+      hud.removeFromSuperViewOnHide = true
+      
+      APIClientManager.sharedInstance.createSession(
+        [
+          "email": email,
+          "password": password
+        ],
+        success: { (responseObject, importedObjects) in
+          hud.hide(true)
+          
+          NSLog("SUCCESS")
+        },
+        failure: { (responseObject, error) in
+          hud.hide(false)
+          
+          if let reasons = responseObject?["reasons"] as? [String] {
+            
+            self.showLoginAlert("Error while logging in",
+              message: "\n-> " + "\n-> ".join(reasons) + "\n\nPlease try again.",
+              email: email)
+            
+          }
+        }
+      ) // APIClientManager.sharedInstance.createSession
+    } // switch AlertTags
+  }
+  
+
+
+  // MARK: - Enums
+  
+  enum AlertTags: Int {
+    case SignupWithEmail
+    case LoginWithEmail
+  }
+
 }
