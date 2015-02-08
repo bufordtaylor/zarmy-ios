@@ -18,6 +18,14 @@
 		D9A905151A84EDC500465A0A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9A905141A84EDC500465A0A /* Images.xcassets */; };
 		D9A905181A84EDC500465A0A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9A905161A84EDC500465A0A /* LaunchScreen.xib */; };
 		D9A905241A84EDC500465A0A /* ZarmyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A905231A84EDC500465A0A /* ZarmyTests.swift */; };
+		D9A905331A87AD1100465A0A /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A9052E1A87AD1100465A0A /* AppConfiguration.swift */; };
+		D9A905341A87AD1100465A0A /* AppHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A9052F1A87AD1100465A0A /* AppHelpers.swift */; };
+		D9A905351A87AD1100465A0A /* APIClientManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A905301A87AD1100465A0A /* APIClientManager.swift */; };
+		D9A905371A87AD1100465A0A /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A905321A87AD1100465A0A /* UserDefaultsManager.swift */; };
+		D9A9053E1A87AE1B00465A0A /* Dictionary+union.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A9053A1A87AE1B00465A0A /* Dictionary+union.swift */; };
+		D9A9053F1A87AE1B00465A0A /* String+rangeSubscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A9053B1A87AE1B00465A0A /* String+rangeSubscript.swift */; };
+		D9A905401A87AE1B00465A0A /* UIColor+hexRGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A9053C1A87AE1B00465A0A /* UIColor+hexRGB.swift */; };
+		D9A905411A87AE1B00465A0A /* UIView+initWithNib.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A9053D1A87AE1B00465A0A /* UIView+initWithNib.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +56,15 @@
 		D9A9051D1A84EDC500465A0A /* ZarmyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZarmyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9A905221A84EDC500465A0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9A905231A84EDC500465A0A /* ZarmyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZarmyTests.swift; sourceTree = "<group>"; };
+		D9A9052E1A87AD1100465A0A /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
+		D9A9052F1A87AD1100465A0A /* AppHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppHelpers.swift; sourceTree = "<group>"; };
+		D9A905301A87AD1100465A0A /* APIClientManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClientManager.swift; sourceTree = "<group>"; };
+		D9A905321A87AD1100465A0A /* UserDefaultsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		D9A9053A1A87AE1B00465A0A /* Dictionary+union.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+union.swift"; sourceTree = "<group>"; };
+		D9A9053B1A87AE1B00465A0A /* String+rangeSubscript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+rangeSubscript.swift"; sourceTree = "<group>"; };
+		D9A9053C1A87AE1B00465A0A /* UIColor+hexRGB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+hexRGB.swift"; sourceTree = "<group>"; };
+		D9A9053D1A87AE1B00465A0A /* UIView+initWithNib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+initWithNib.swift"; sourceTree = "<group>"; };
+		D9A905421A87AF2F00465A0A /* Zarmy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Zarmy-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,7 +136,7 @@
 		D9A905071A84EDC500465A0A /* Zarmy */ = {
 			isa = PBXGroup;
 			children = (
-				D9A9050A1A84EDC500465A0A /* AppDelegate.swift */,
+				D9A9052D1A87ACE200465A0A /* Core */,
 				52B9537F1A850649009AF375 /* StartViewController.swift */,
 				5210B05D1A85633500D83384 /* StartViewController.xib */,
 				D9A905141A84EDC500465A0A /* Images.xcassets */,
@@ -156,6 +173,31 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		D9A9052D1A87ACE200465A0A /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				D9A905391A87ADFE00465A0A /* Extensions */,
+				D9A9052E1A87AD1100465A0A /* AppConfiguration.swift */,
+				D9A9050A1A84EDC500465A0A /* AppDelegate.swift */,
+				D9A9052F1A87AD1100465A0A /* AppHelpers.swift */,
+				D9A905301A87AD1100465A0A /* APIClientManager.swift */,
+				D9A905321A87AD1100465A0A /* UserDefaultsManager.swift */,
+				D9A905421A87AF2F00465A0A /* Zarmy-Bridging-Header.h */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		D9A905391A87ADFE00465A0A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D9A9053A1A87AE1B00465A0A /* Dictionary+union.swift */,
+				D9A9053B1A87AE1B00465A0A /* String+rangeSubscript.swift */,
+				D9A9053C1A87AE1B00465A0A /* UIColor+hexRGB.swift */,
+				D9A9053D1A87AE1B00465A0A /* UIView+initWithNib.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -168,6 +210,7 @@
 				D9A905021A84EDC500465A0A /* Frameworks */,
 				D9A905031A84EDC500465A0A /* Resources */,
 				92E47368EE4E2C2AE81416C2 /* Copy Pods Resources */,
+				D9A905451A87B35600465A0A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -208,6 +251,11 @@
 					D9A905041A84EDC500465A0A = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = FTW74R2CX6;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					D9A9051C1A84EDC500465A0A = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -288,6 +336,19 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D9A905451A87B35600465A0A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "#!/bin/bash\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -295,9 +356,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9A905401A87AE1B00465A0A /* UIColor+hexRGB.swift in Sources */,
+				D9A9053F1A87AE1B00465A0A /* String+rangeSubscript.swift in Sources */,
 				52B953801A850649009AF375 /* StartViewController.swift in Sources */,
 				D9A9050B1A84EDC500465A0A /* AppDelegate.swift in Sources */,
+				D9A905411A87AE1B00465A0A /* UIView+initWithNib.swift in Sources */,
+				D9A9053E1A87AE1B00465A0A /* Dictionary+union.swift in Sources */,
+				D9A905331A87AD1100465A0A /* AppConfiguration.swift in Sources */,
 				D9A9050E1A84EDC500465A0A /* Zarmy.xcdatamodeld in Sources */,
+				D9A905341A87AD1100465A0A /* AppHelpers.swift in Sources */,
+				D9A905371A87AD1100465A0A /* UserDefaultsManager.swift in Sources */,
+				D9A905351A87AD1100465A0A /* APIClientManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,10 +482,13 @@
 			baseConfigurationReference = 05E999A19D1FBB3F02D6FD15 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Zarmy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Zarmy-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -425,10 +497,12 @@
 			baseConfigurationReference = 31A3AFE3B9CDC7A1396095AD /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Zarmy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Zarmy-Bridging-Header.h";
 			};
 			name = Release;
 		};

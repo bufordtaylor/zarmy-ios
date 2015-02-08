@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Zarmy. All rights reserved.
 //
 
-import UIKit
-
 class StartViewController: UIViewController {
   
   @IBOutlet var facebookButton: UIButton!
@@ -25,11 +23,8 @@ class StartViewController: UIViewController {
   }
   
   override func viewWillAppear(animated: Bool) {
-    
-    NSLog("frame.width = \(view.frame.size.width)")
-
     if view.frame.size.width < 350 {
-      toddlerWidth.constant = 120.0;
+      toddlerWidth.constant = 120.0
     }
   }
 }
