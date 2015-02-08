@@ -28,11 +28,16 @@ class StartViewController: GAITrackedViewController, UIAlertViewDelegate {
     }
   }
   
+  // MARK: - IBActions
+  
   @IBAction func emailLoginTapped(sender: UIButton) {
     showLoginAlert("Login", message: "Please enter your email and password")
   }
   
-  
+  @IBAction func emailSignupTapped(sender: UIButton) {
+    showSignupAlert("Signup", message: "Please enter your email and create a password")
+  }
+
   func showLoginAlert(title: String, message: String, email: String = "") {
     
     let alertView = UIAlertView(
@@ -51,6 +56,25 @@ class StartViewController: GAITrackedViewController, UIAlertViewDelegate {
     alertView.show()
   }
   
+  func showSignupAlert(title: String, message: String, email: String = "") {
+    
+    let alertView = UIAlertView(
+      title: title,
+      message: message,
+      delegate: self,
+      cancelButtonTitle: "Cancel",
+      otherButtonTitles: "Sign up")
+    
+    alertView.alertViewStyle = .LoginAndPasswordInput
+    alertView.tag = AlertTags.SignupWithEmail.rawValue
+    
+    alertView.textFieldAtIndex(0)!.placeholder = "Email"
+    alertView.textFieldAtIndex(0)!.text = email
+    
+    alertView.show()
+  }
+
+  
   // MARK: - UIAlertView Delegate Methods
   
   func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
@@ -61,14 +85,12 @@ class StartViewController: GAITrackedViewController, UIAlertViewDelegate {
 
     switch AlertTags(rawValue: alertView.tag)! {
       
-    case .SignupWithEmail:
-      return
     case .LoginWithEmail:
       let email = alertView.textFieldAtIndex(0)!.text
       let password = alertView.textFieldAtIndex(1)!.text
       
       let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
-      hud.labelText = "Logging in ..."
+      hud.labelText = "Logging in..."
       hud.dimBackground = true
       hud.removeFromSuperViewOnHide = true
       
@@ -94,6 +116,41 @@ class StartViewController: GAITrackedViewController, UIAlertViewDelegate {
           }
         }
       ) // APIClientManager.sharedInstance.createSession
+      
+    case .SignupWithEmail:
+      let email = alertView.textFieldAtIndex(0)!.text
+      let password = alertView.textFieldAtIndex(1)!.text
+      
+      let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+      hud.labelText = "Signing up..."
+      hud.dimBackground = true
+      hud.removeFromSuperViewOnHide = true
+      
+      APIClientManager.sharedInstance.createUser(
+        [
+          "user": [
+            "email": email,
+            "password": password
+          ]
+        ],
+        success: { (responseObject, importedObjects) in
+          hud.hide(true)
+          
+          NSLog("SUCCESS SIGNING UP")
+        },
+        failure: { (responseObject, error) in
+          hud.hide(false)
+          
+          if let reasons = responseObject?["reasons"] as? [String] {
+            
+            self.showSignupAlert("Error while signing up",
+              message: "\n-> " + "\n-> ".join(reasons) + "\n\nPlease try again.",
+              email: email)
+            
+          }
+        }
+      ) // APIClientManager.sharedInstance.createUser
+
     } // switch AlertTags
   }
   
