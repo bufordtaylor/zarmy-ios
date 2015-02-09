@@ -38,24 +38,14 @@ class StartViewController: GAITrackedViewController, UIAlertViewDelegate {
   }
   
   @IBAction func facebookLoginTapped(sender: UIButton) {
+    FBSession.activeSession().closeAndClearTokenInformation()
     
-    let session = FBSession(permissions: ["public_profile", "email", "user_friends", "user_checkins", "friends_checkins", "user_photos"])
+    let readPermissions = ["public_profile", "email", "user_friends", "user_checkins", "friends_checkins", "user_photos"]
+    
+    let session = FBSession(permissions: readPermissions)
     FBSession.setActiveSession(session)
     
-    session.openWithBehavior(.WithFallbackToWebView) {
-      (session: FBSession!, status: FBSessionState, error: NSError!) in
-      
-      if error != nil {
-        AppHelpers.GA("soft_error", action: "facebook", label: error.localizedDescription, value: nil)
-        NSLog("Error: Could not open Facebook session \(error)")
-        return
-      }
-      
-      if !FBSession.activeSession().isOpen {
-        // it will automatically opened and the block of session.openWithBehavior will be re-executed
-        return
-      }
-      
+    let correctlyLoggedInAction = { (session: FBSession) -> Void in
       FBRequest.requestForMe().startWithCompletionHandler {
         (connection: FBRequestConnection!, user: AnyObject!, error: NSError!) in
         
@@ -94,9 +84,50 @@ class StartViewController: GAITrackedViewController, UIAlertViewDelegate {
             }
           }
         ) // APIClientManager.sharedInstance.createUser
-      
+        
       } // FBRequest.requestForMe().startWithCompletionHandler
-
+      
+      return
+    } // correctlyLoggedInAction
+    
+    
+    session.openWithBehavior(.WithFallbackToWebView) {
+      (session: FBSession!, status: FBSessionState, error: NSError!) in
+      
+      if error != nil {
+        AppHelpers.GA("soft_error", action: "facebook-login", label: error.localizedDescription, value: nil)
+        NSLog("Error: Could not open Facebook session \(error)")
+        return
+      }
+      
+      if !session.isOpen {
+        // it will automatically opened and the block of session.openWithBehavior will be re-executed
+        return
+      }
+      
+      if !session.hasGranted("email") {
+//        UIAlertView(title: "Error while logging in",
+//          message: "We need your email address to create an account on Zarmy.",
+//          delegate: nil,
+//          cancelButtonTitle: nil,
+//          otherButtonTitles: "Try again").show()
+        
+        session.requestNewReadPermissions(readPermissions) {
+          (session: FBSession!, error: NSError!) -> Void in
+          
+          if error != nil {
+            AppHelpers.GA("soft_error", action: "facebook-login", label: error.localizedDescription, value: nil)
+            NSLog("Error: Could not open Facebook session (2) \(error)")
+            return
+          }
+          
+          correctlyLoggedInAction(session)
+        }
+        return
+      } // if !session.hasGranted("email")
+      
+      correctlyLoggedInAction(session)
+      
     } // session.openWithBehavior
     
   } // facebookLoginTapped

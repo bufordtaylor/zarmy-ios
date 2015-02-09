@@ -221,8 +221,8 @@ class APIClientManager: AFHTTPRequestOperationManager {
     return {
       (operation: AFHTTPRequestOperation!, error: NSError!) in
       NSLog("APIClientManager: apiRequestStandardFailure()")
-      if operation != nil { NSLog("\(operation)") }
-      if error != nil { NSLog("\(error)") }
+      if operation != nil { NSLog("%@", operation) }
+      if error != nil { NSLog("%@", error) }
       
       if operation.response?.statusCode >= 500 {
         // NOTE: if you don't want to show an alert for some actions,
