@@ -16,7 +16,7 @@ class APIClientManager: AFHTTPRequestOperationManager {
     return APIClientManagerSharedInstance
   }
   
-  override init() {
+  init() {
     let apiURL = AppConfiguration.serverBaseURLViaSSL + "/api/v\(AppConfiguration.apiVersion)"
     
     super.init(baseURL: NSURL(string: apiURL))
@@ -220,7 +220,9 @@ class APIClientManager: AFHTTPRequestOperationManager {
     
     return {
       (operation: AFHTTPRequestOperation!, error: NSError!) in
-      NSLog("APIClientManager: apiRequestStandardFailure() \n\(operation)\n\(error)")
+      NSLog("APIClientManager: apiRequestStandardFailure()")
+      if operation != nil { NSLog("\(operation)") }
+      if error != nil { NSLog("\(error)") }
       
       if operation.response?.statusCode >= 500 {
         // NOTE: if you don't want to show an alert for some actions,

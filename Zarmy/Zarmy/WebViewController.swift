@@ -20,12 +20,47 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
     webView.loadRequest(NSURLRequest(URL: NSURL(string: url)!))
     
     view.addSubview(webView)
+    
+    let logoutGesture = UITapGestureRecognizer(target: self, action: "confirmLogOut")
+    logoutGesture.numberOfTapsRequired = 5
+    webView.addGestureRecognizer(logoutGesture)
   }
+  
+  func confirmLogOut() {
+    let alert = UIAlertView(title: "Log out?",
+      message: "You are currently logged in as \(UserDefaultsManager.email!)",
+      delegate: self,
+      cancelButtonTitle: "Cancel",
+      otherButtonTitles: "Log out")
+    
+    alert.tag = AlertTags.LoggingOut.rawValue
+    alert.show()
+  }
+  
+  // MARK: - UIAlertView Delegate Methods
+  
+  func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    
+    if buttonIndex == 0 { // cancel
+      return
+    }
+    
+    switch AlertTags(rawValue: alertView.tag)! {
+      
+    case .LoggingOut:
+      if buttonIndex == 1 { // Log out
+        UserDefaultsManager.logOut()
+        navigationController!.popViewControllerAnimated(true)
+      }
+      
+    } // switch AlertTags
+  }
+
   
   // MARK: - Enums
   
   enum AlertTags: Int {
-    case LoginWithEmail
+    case LoggingOut
   }
   
 }

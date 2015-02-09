@@ -13,7 +13,6 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
-  var startVC: StartViewController!
   internal var currentlyReachable = true
 
 
@@ -56,15 +55,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     window!.backgroundColor = UIColor.whiteColor()
     
+    let startVC = StartViewController(nibName: "StartViewController", bundle: nil)
+    startVC.view.frame = window!.frame
+    let navigationController = UINavigationController(rootViewController: startVC)
+    navigationController.navigationBarHidden = true
+    window!.rootViewController = navigationController
+    
     if UserDefaultsManager.loggedIn {
       let webVC = WebViewController()
       webVC.view.frame = window!.frame
-      window!.rootViewController = webVC
-    } else {
-      startVC = StartViewController(nibName: "StartViewController", bundle: nil)
-      startVC.view.frame = window!.frame
-      //let nav = UINavigationController(rootViewController: startVC)
-      window!.rootViewController = startVC
+      navigationController.pushViewController(webVC, animated: false)
     }
     
     window!.makeKeyAndVisible()
@@ -93,6 +93,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func applicationDidBecomeActive(application: UIApplication) {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    FBAppEvents.activateApp()
   }
 
   func applicationWillTerminate(application: UIApplication) {

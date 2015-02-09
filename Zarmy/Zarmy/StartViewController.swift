@@ -80,7 +80,7 @@ class StartViewController: GAITrackedViewController, UIAlertViewDelegate {
           success: { (responseObject, importedObjects) in
             hud.hide(true)
             
-            NSLog("COMPLETE SUCCESS FB LOGIN")
+            self.navigationController!.pushViewController(WebViewController(), animated: true)
           },
           failure: { (responseObject, error) in
             hud.hide(false)
@@ -88,7 +88,7 @@ class StartViewController: GAITrackedViewController, UIAlertViewDelegate {
             session.closeAndClearTokenInformation()
             
             if let reasons = responseObject?["reasons"] as? [String] {
-              self.showSignupAlert("Error while logging in",
+              self.showLoginAlert("Error while logging in",
                 message: "\n-> " + "\n-> ".join(reasons) + "\n\nPlease try again.",
                 email: email)
             }
@@ -166,7 +166,7 @@ class StartViewController: GAITrackedViewController, UIAlertViewDelegate {
         success: { (responseObject, importedObjects) in
           hud.hide(true)
           
-          NSLog("SUCCESS")
+          self.navigationController!.pushViewController(WebViewController(), animated: true)
         },
         failure: { (responseObject, error) in
           hud.hide(false)
@@ -201,7 +201,7 @@ class StartViewController: GAITrackedViewController, UIAlertViewDelegate {
         success: { (responseObject, importedObjects) in
           hud.hide(true)
           
-          NSLog("SUCCESS SIGNING UP")
+          self.navigationController!.pushViewController(WebViewController(), animated: true)
         },
         failure: { (responseObject, error) in
           hud.hide(false)
