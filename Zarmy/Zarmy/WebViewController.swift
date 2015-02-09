@@ -13,11 +13,24 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    if !UserDefaultsManager.loggedIn {
+      NSLog("Error: The user should be logged in to access the webView")
+      navigationController!.popViewControllerAnimated(true)
+      return
+    }
+
+    let urlPath = AppConfiguration.serverBaseURLViaSSL + "/webflow"
+    let url = NSURL(string: urlPath)!
+    let request = NSMutableURLRequest(URL: url)
+    
+    let loginString = NSString(format: "%@:%@", UserDefaultsManager.email!, UserDefaultsManager.password!)
+    let loginData: NSData = loginString.dataUsingEncoding(NSUTF8StringEncoding)!
+    let base64LoginString = loginData.base64EncodedStringWithOptions(nil)
+    request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
+    
     webView = UIWebView()
     webView.frame = view.frame
-    
-    let url = AppConfiguration.serverBaseURLViaSSL + "/webflow"
-    webView.loadRequest(NSURLRequest(URL: NSURL(string: url)!))
+    webView.loadRequest(request)
     
     view.addSubview(webView)
     
