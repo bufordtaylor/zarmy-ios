@@ -40,19 +40,19 @@ class AppHelpers {
     return label.frame.height
   }
   
-  // MARK: - Remote images
-  
-  class func applyImageURLToImageView(url: String?, imageView: UIImageView, placeholderImage: UIImage?) {
-    
-    imageView.image = placeholderImage
-    
-    if url != nil {
-      let validNSURL = NSURL(string: url!)
-      if validNSURL != nil {
-        imageView.sd_setImageWithURL(validNSURL!, placeholderImage: placeholderImage)
-      }
-    }
-  }
+//  // MARK: - Remote images
+//  
+//  class func applyImageURLToImageView(url: String?, imageView: UIImageView, placeholderImage: UIImage?) {
+//    
+//    imageView.image = placeholderImage
+//    
+//    if url != nil {
+//      let validNSURL = NSURL(string: url!)
+//      if validNSURL != nil {
+//        imageView.sd_setImageWithURL(validNSURL!, placeholderImage: placeholderImage)
+//      }
+//    }
+//  }
   
   // Google Analytics
   

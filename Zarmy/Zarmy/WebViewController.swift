@@ -55,13 +55,12 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
   
   func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
     let connection = NSURLConnection(request: request, delegate: self)
-    return true//connection != nil
+    return connection != nil
   }
-    
+  
   // MARK: NSURLConnection Delegate Methods
   
   func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {
-    
     let httpResponse = response as NSHTTPURLResponse
     if httpResponse.statusCode == 401 || httpResponse.statusCode == 403 {
       UserDefaultsManager.logOut()
