@@ -63,7 +63,6 @@ class APIClientManager: AFHTTPRequestOperationManager {
     if preRequestReachabilityCheck(alertWhenUnreachable) {
       
       params = setAppVersion(params)
-      params = setFacebookToken(params)
       
       POST(
         path,
@@ -95,9 +94,7 @@ class APIClientManager: AFHTTPRequestOperationManager {
         
         self.saveUserDataFromResponse(userObject)
         
-        if success != nil {
-          success!(responseObject: responseObject, importedObjects: importedObjects)
-        }
+        success?(responseObject: responseObject, importedObjects: importedObjects)
         
       },
       failure: failure
@@ -120,14 +117,13 @@ class APIClientManager: AFHTTPRequestOperationManager {
         
         self.saveUserDataFromResponse(userObject)
         
-        if success != nil {
-          success!(responseObject: responseObject, importedObjects: importedObjects)
-        }
-
+        success?(responseObject: responseObject, importedObjects: importedObjects)
+        
       },
       failure: failure
     )
   }
+
   
 //  func resetPassword(email: String, success: APIRequestCustomSuccessBlock?, failure: APIRequestCustomFailureBlock?) {
 //    
@@ -226,14 +222,19 @@ class APIClientManager: AFHTTPRequestOperationManager {
       (operation: AFHTTPRequestOperation!, error: NSError!) in
       NSLog("APIClientManager: apiRequestStandardFailure() \n\(operation)\n\(error)")
       
-      if operation.response != nil && operation.response!.statusCode >= 500 {
+      if operation.response?.statusCode >= 500 {
         // NOTE: if you don't want to show an alert for some actions,
         // like because you want the UI to be updated nicely instead of a brutal alert, you'll need to create an instance variable
         // like "alertOnUnmanagedErrors" that gets resetted after the failure block is executed
 
         UIAlertView(title: "This is embarrassing...", message: "You've found a bug in our system. We've got robots sending the error analysis to our engineers, who we hooked to coffee IVs. We've also alerted the president.", delegate: nil, cancelButtonTitle: "Cancel").show()
-        
         AppHelpers.GA("soft_error", action: "api_client", label: error.localizedDescription, value: nil)
+        
+      } else if operation.response == nil && error != nil {
+        
+        let errorDetails = error.localizedDescription + "\n\(error.userInfo)"
+        UIAlertView(title: "Error", message: errorDetails, delegate: nil, cancelButtonTitle: "Cancel").show()
+        AppHelpers.GA("unmanaged_error", action: "api_client", label: errorDetails, value: nil)
       }
       
       if failureBlock != nil {
@@ -290,19 +291,6 @@ class APIClientManager: AFHTTPRequestOperationManager {
     return params!
   }
   
-  func setFacebookToken(var params: [String: AnyObject]?) -> [String: AnyObject] {
-
-    if params == nil {
-      params = [String: AnyObject]()
-    }
-    
-    if UserDefaultsManager.fbAccessToken != nil {
-      params!["facebook_id"] = UserDefaultsManager.fbAccessToken
-    }
-    
-    return params!
-  }
-  
   func preRequestReachabilityCheck(alertWhenUnreachable: Bool) -> Bool {
     
     let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
@@ -318,6 +306,7 @@ class APIClientManager: AFHTTPRequestOperationManager {
   func saveUserDataFromResponse(userObject: [String: AnyObject]) {
     
     UserDefaultsManager.name = userObject["name"] as? String
+    
   }
 
 //  // MARK: - Core Data

@@ -32,10 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let mixpanel = Mixpanel.sharedInstanceWithToken(AppConfiguration.mixpanelToken)
     mixpanel.track("application:didFinishLaunchingWithOptions", properties: launchOptions)
     
-    // Facebook
-    FBLoginView.self
-    FBProfilePictureView.self
-    
     // Reachability
     let apiClientManager = APIClientManager.sharedInstance
     let operationQueue = apiClientManager.operationQueue
@@ -71,6 +67,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     return true
   }
+  
+  func application(application: UIApplication, openURL url: NSURL, sourceApplication: NSString?, annotation: AnyObject) -> Bool {
+    return FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
+  }
+
 
   func applicationWillResignActive(application: UIApplication) {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

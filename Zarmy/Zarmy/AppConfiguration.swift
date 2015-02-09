@@ -11,8 +11,8 @@ class AppConfiguration {
   class var environment: String {
     // comment one or the other return line if you want to run in development or production
     
-    return "development"
-//    return "production"
+//    return "development"
+    return "production"
   }
   
   // MARK: - Environment shorthands
@@ -32,7 +32,9 @@ class AppConfiguration {
   }
   
   class var serverBaseURLViaSSL: String {
-    return productionEnvironment ? "https://zarmy.club" : "http://zarmy.dev"
+    // TODO: get SSL certificate
+//    return productionEnvironment ? "https://zarmy.club" : "http://zarmy.dev"
+    return productionEnvironment ? "http://zarmy.club" : "http://zarmy.dev"
   }
   
   class var apiVersion: Int {

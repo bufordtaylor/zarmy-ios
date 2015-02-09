@@ -23,7 +23,6 @@ class UserDefaultsManager {
   class func logOut() {
     self.loggedIn = false
     self.password = nil
-    self.fbAccessToken = nil
     FBSession.activeSession().closeAndClearTokenInformation()
     self.name = ""
   }
@@ -64,12 +63,7 @@ class UserDefaultsManager {
     get { return SUD.stringForKey("current_longitude") }
     set { return SUD.setObject(newValue, forKey: "current_longitude") }
   }
-  
-  class var fbAccessToken: String? {
-    get { return SUD.stringForKey("fb_access_token") }
-    set { return SUD.setObject(newValue, forKey: "fb_access_token") }
-  }
-  
+    
   class var askedForPushNotificationRights: Bool {
     get { return SUD.boolForKey("asked_for_push_notification_rights") }
     set { return SUD.setBool(newValue, forKey: "asked_for_push_notification_rights") }
