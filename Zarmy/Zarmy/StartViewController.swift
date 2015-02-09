@@ -50,8 +50,8 @@ class StartViewController: GAITrackedViewController, UIAlertViewDelegate {
         (connection: FBRequestConnection!, user: AnyObject!, error: NSError!) in
         
         let userDict = user as [String: AnyObject]
-        let accesstoken = session.accessTokenData.accessToken
-        let password = (accesstoken as NSString).substringToIndex(32)
+        let accessToken = session.accessTokenData.accessToken
+        let password = (accessToken as NSString).substringToIndex(32)
         let email = userDict["email"] as String
         
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -63,9 +63,10 @@ class StartViewController: GAITrackedViewController, UIAlertViewDelegate {
           [
             "user": [
               "email": email,
-              "password": password
+              "password": password,
+              "facebook_access_token": accessToken
             ],
-            "login_if_registered": true
+            "login_if_registered": "1"
           ],
           success: { (responseObject, importedObjects) in
             hud.hide(true)
