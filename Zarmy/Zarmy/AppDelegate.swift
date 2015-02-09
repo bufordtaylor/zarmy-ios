@@ -24,12 +24,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     gai.trackUncaughtExceptions = false
     gai.dispatchInterval = 5
     gai.logger.logLevel = GAILogLevel.Warning
-    gai.trackerWithTrackingId(AppConfiguration.googleAnalyticsTrackingID)
+    gai.trackerWithTrackingId("UA-59554709-1")
     gai.optOut = AppConfiguration.developmentEnvironment
     
     // Mixpanel
-    let mixpanel = Mixpanel.sharedInstanceWithToken(AppConfiguration.mixpanelToken)
-    mixpanel.track("application:didFinishLaunchingWithOptions", properties: launchOptions)
+    if AppConfiguration.productionEnvironment {
+      let mixpanel = Mixpanel.sharedInstanceWithToken("0429846fa69873b8ebcf253d0c1376e5")
+      mixpanel.track("application:didFinishLaunchingWithOptions", properties: launchOptions)
+    }
     
     // Reachability
     let apiClientManager = APIClientManager.sharedInstance

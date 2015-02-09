@@ -41,16 +41,6 @@ class AppConfiguration {
     return 1
   }
   
-  // MARK: - Google Analytics
-  class var googleAnalyticsTrackingID: String {
-    return productionEnvironment ? "UA-PRODXXX" : "DEV"
-  }
-  
-  // MARK: - Mixpanel
-  class var mixpanelToken: String {
-    return productionEnvironment ? "PRODXXX" : "DEV"
-  }
-  
   
   // MARK: - UI
   
