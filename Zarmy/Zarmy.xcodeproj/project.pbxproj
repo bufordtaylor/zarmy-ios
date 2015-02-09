@@ -13,6 +13,7 @@
 		52B953801A850649009AF375 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B9537F1A850649009AF375 /* StartViewController.swift */; };
 		52B953851A853F31009AF375 /* start-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B953841A853F31009AF375 /* start-bg@2x.png */; };
 		5F100BFCD1871D0817269979 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BEE7AE2913575E5A645436D /* libPods.a */; };
+		D9394DB91A88626F00EB5E6C /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9394DB81A88626F00EB5E6C /* WebViewController.swift */; };
 		D9A9050B1A84EDC500465A0A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A9050A1A84EDC500465A0A /* AppDelegate.swift */; };
 		D9A9050E1A84EDC500465A0A /* Zarmy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D9A9050C1A84EDC500465A0A /* Zarmy.xcdatamodeld */; };
 		D9A905151A84EDC500465A0A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9A905141A84EDC500465A0A /* Images.xcassets */; };
@@ -47,6 +48,8 @@
 		5210B0601A8617EF00D83384 /* zarmy-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zarmy-logo@2x.png"; sourceTree = "<group>"; };
 		52B9537F1A850649009AF375 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		52B953841A853F31009AF375 /* start-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "start-bg@2x.png"; sourceTree = "<group>"; };
+		D9394DB81A88626F00EB5E6C /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		D9394DBA1A88635A00EB5E6C /* Zarmy-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Zarmy-Bridging-Header.h"; sourceTree = "<group>"; };
 		D9A905051A84EDC500465A0A /* Zarmy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zarmy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9A905091A84EDC500465A0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9A9050A1A84EDC500465A0A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -64,7 +67,6 @@
 		D9A9053B1A87AE1B00465A0A /* String+rangeSubscript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+rangeSubscript.swift"; sourceTree = "<group>"; };
 		D9A9053C1A87AE1B00465A0A /* UIColor+hexRGB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+hexRGB.swift"; sourceTree = "<group>"; };
 		D9A9053D1A87AE1B00465A0A /* UIView+initWithNib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+initWithNib.swift"; sourceTree = "<group>"; };
-		D9A905421A87AF2F00465A0A /* Zarmy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Zarmy-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 				D9A9052D1A87ACE200465A0A /* Core */,
 				52B9537F1A850649009AF375 /* StartViewController.swift */,
 				5210B05D1A85633500D83384 /* StartViewController.xib */,
+				D9394DB81A88626F00EB5E6C /* WebViewController.swift */,
 				D9A905141A84EDC500465A0A /* Images.xcassets */,
 				D9A905161A84EDC500465A0A /* LaunchScreen.xib */,
 				52B953831A853F31009AF375 /* images */,
@@ -182,7 +185,7 @@
 				D9A9052F1A87AD1100465A0A /* AppHelpers.swift */,
 				D9A905301A87AD1100465A0A /* APIClientManager.swift */,
 				D9A905321A87AD1100465A0A /* UserDefaultsManager.swift */,
-				D9A905421A87AF2F00465A0A /* Zarmy-Bridging-Header.h */,
+				D9394DBA1A88635A00EB5E6C /* Zarmy-Bridging-Header.h */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				D9A905411A87AE1B00465A0A /* UIView+initWithNib.swift in Sources */,
 				D9A9053E1A87AE1B00465A0A /* Dictionary+union.swift in Sources */,
 				D9A905331A87AD1100465A0A /* AppConfiguration.swift in Sources */,
+				D9394DB91A88626F00EB5E6C /* WebViewController.swift in Sources */,
 				D9A9050E1A84EDC500465A0A /* Zarmy.xcdatamodeld in Sources */,
 				D9A905341A87AD1100465A0A /* AppHelpers.swift in Sources */,
 				D9A905371A87AD1100465A0A /* UserDefaultsManager.swift in Sources */,
@@ -489,7 +493,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Zarmy-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Zarmy/Zarmy-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -505,7 +509,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Zarmy-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Zarmy/Zarmy-Bridging-Header.h";
 			};
 			name = Release;
 		};

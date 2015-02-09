@@ -55,15 +55,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
     
     window!.backgroundColor = UIColor.whiteColor()
-    startVC = StartViewController(nibName: "StartViewController", bundle: nil)
-    startVC.view.frame = window!.frame;
-    //let nav = UINavigationController(rootViewController: startVC)
-
-    window!.rootViewController = startVC
+    
+    if UserDefaultsManager.loggedIn {
+      let webVC = WebViewController()
+      webVC.view.frame = window!.frame
+      window!.rootViewController = webVC
+    } else {
+      startVC = StartViewController(nibName: "StartViewController", bundle: nil)
+      startVC.view.frame = window!.frame
+      //let nav = UINavigationController(rootViewController: startVC)
+      window!.rootViewController = startVC
+    }
+    
     window!.makeKeyAndVisible()
-    
-    
-    
     
     return true
   }
