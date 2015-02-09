@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Zarmy. All rights reserved.
 //
 
-class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebViewDelegate {
+class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebViewDelegate, NSURLConnectionDelegate {
   
   var webView: UIWebView!
   
@@ -31,6 +31,7 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
     webView = UIWebView()
     webView.frame = view.frame
     webView.loadRequest(request)
+    webView.delegate = self
     
     view.addSubview(webView)
     
@@ -49,6 +50,26 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
     alert.tag = AlertTags.LoggingOut.rawValue
     alert.show()
   }
+  
+  // MARK: UIWebView Delegate Methods
+  
+  func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    let connection = NSURLConnection(request: request, delegate: self)
+    return true//connection != nil
+  }
+    
+  // MARK: NSURLConnection Delegate Methods
+  
+  func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {
+    
+    let httpResponse = response as NSHTTPURLResponse
+    if httpResponse.statusCode == 401 || httpResponse.statusCode == 403 {
+      UserDefaultsManager.logOut()
+      navigationController!.popViewControllerAnimated(true)
+    }
+
+  }
+  
   
   // MARK: - UIAlertView Delegate Methods
   
