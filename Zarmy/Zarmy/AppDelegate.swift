@@ -105,6 +105,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.saveContext()
   }
 
+  // MARK: - Push Notifications
+  
+  func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+    NSLog("AppDelegate -- didRegisterForRemoteNotificationsWithDeviceToken:\(deviceToken)")
+    
+    let tokenAsHex = AppHelpers.dataToHex(deviceToken)
+    UserDefaultsManager.pushNotificationToken = tokenAsHex
+    
+  }
+  
+  func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+    NSLog("AppDelegate -- didRegisterUserNotificationSettings:\(notificationSettings)")
+  }
+  
+  func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+    NSLog("AppDelegate -- didFailToRegisterForRemoteNotificationsWithError:\(error)")
+  }
+  
+
+  
   // MARK: - Core Data stack
 
   lazy var applicationDocumentsDirectory: NSURL = {

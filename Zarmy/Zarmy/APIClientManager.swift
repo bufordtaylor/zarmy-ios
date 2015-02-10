@@ -161,9 +161,7 @@ class APIClientManager: AFHTTPRequestOperationManager {
   
   func postAPNToken(token: String, success: APIRequestCustomSuccessBlock? = nil, failure: APIRequestCustomFailureBlock? = nil) {
     
-    if UserDefaultsManager.loggedIn {
-      setAuthCurrentUser()
-    }
+    setAuthCurrentUser()
     
     apiPOST(
       "users/notification_token",
@@ -173,10 +171,7 @@ class APIClientManager: AFHTTPRequestOperationManager {
       success: { (responseObject, importedObjects) in
         
         UserDefaultsManager.serverReceivedPushNotificationToken = true
-        
-        if success != nil {
-          success!(responseObject: responseObject, importedObjects: importedObjects)
-        }
+        success?(responseObject: responseObject, importedObjects: importedObjects)
         
       },
       failure: failure

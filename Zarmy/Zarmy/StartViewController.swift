@@ -27,6 +27,12 @@ class StartViewController: GAITrackedViewController, UIAlertViewDelegate {
     }
   }
   
+  override func viewDidAppear(animated: Bool) {
+    if !UserDefaultsManager.askedForPushNotificationRights || (UserDefaultsManager.askedForPushNotificationRights && !UserDefaultsManager.serverReceivedPushNotificationToken) {
+      AppHelpers.askForPushNotificationRights()
+    }
+  }
+  
   // MARK: - IBActions
   
   @IBAction func emailLoginTapped(sender: UIButton) {

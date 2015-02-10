@@ -18,6 +18,10 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
       navigationController!.popViewControllerAnimated(true)
       return
     }
+    
+    if UserDefaultsManager.pushNotificationToken != nil && !UserDefaultsManager.serverReceivedPushNotificationToken {
+      APIClientManager.sharedInstance.postAPNToken(UserDefaultsManager.pushNotificationToken!)
+    }
 
     let urlPath = AppConfiguration.serverBaseURLViaSSL + "/webflow"
     let url = NSURL(string: urlPath)!
