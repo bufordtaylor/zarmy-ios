@@ -44,6 +44,20 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
     webView.addGestureRecognizer(logoutGesture)
   }
   
+  override func viewWillAppear(animated: Bool) {
+    
+    let statusBar = UIView(frame: CGRectMake(0, 0, view.frame.size.width, 20))
+    statusBar.backgroundColor = UIColor(hexRGB: "28C9B6")
+    view.addSubview(statusBar)
+    
+    webView.backgroundColor = UIColor(hexRGB: "28C9B6")
+    
+    var viewBounds = webView.bounds
+    viewBounds.origin.y = -20;
+    viewBounds.size.height = viewBounds.size.height + 20;
+    view.frame = viewBounds;
+  }
+  
   func confirmLogOut() {
     let alert = UIAlertView(title: "Log out?",
       message: "You are currently logged in as \(UserDefaultsManager.email!)",
