@@ -30,13 +30,15 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>158</string>
+	<string>202</string>
 	<key>FacebookAppID</key>
 	<string>717974991663888</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Show activities close to you.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

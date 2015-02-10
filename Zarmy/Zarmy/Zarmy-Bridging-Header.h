@@ -16,3 +16,4 @@
 #include "GAITrackedViewController.h"
 #include "GAITracker.h"
 #import "Mixpanel.h"
+#import "INTULocationManager.h"

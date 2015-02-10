@@ -48,22 +48,7 @@ class UserDefaultsManager {
     get { return SUD.stringForKey("name") }
     set { return SUD.setObject(newValue, forKey: "name") }
   }
-
-  class var locationEnabled: Bool {
-    get { return SUD.boolForKey("location_enabled") }
-    set { return SUD.setBool(newValue, forKey: "location_enabled") }
-  }
   
-  class var currentLatitude: String? {
-    get { return SUD.stringForKey("current_latitude") }
-    set { return SUD.setObject(newValue, forKey: "current_latitude") }
-  }
-  
-  class var currentLongitude: String? {
-    get { return SUD.stringForKey("current_longitude") }
-    set { return SUD.setObject(newValue, forKey: "current_longitude") }
-  }
-    
   class var askedForPushNotificationRights: Bool {
     get { return SUD.boolForKey("asked_for_push_notification_rights") }
     set { return SUD.setBool(newValue, forKey: "asked_for_push_notification_rights") }

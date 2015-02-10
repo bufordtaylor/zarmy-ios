@@ -7,15 +7,7 @@
 //
 
 class AppHelpers {
-  
-  // MARK: - Locations
-  class func validCoordinates() -> Bool {
-    return
-      UserDefaultsManager.locationEnabled
-      && UserDefaultsManager.currentLongitude != nil
-      && UserDefaultsManager.currentLatitude != nil
-  }
-  
+    
   // MARK: - Layout related calculations
   
   class func widthForText(text: String, font: UIFont, width: CGFloat) -> CGFloat {

@@ -6,9 +6,13 @@
 //  Copyright (c) 2015 Zarmy. All rights reserved.
 //
 
+import CoreLocation
+
 class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebViewDelegate, NSURLConnectionDelegate {
   
   var webView: UIWebView!
+  var requestsCount: Int = 0
+  var webViewProgressHUD: MBProgressHUD!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -22,22 +26,35 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
     if UserDefaultsManager.pushNotificationToken != nil && !UserDefaultsManager.serverReceivedPushNotificationToken {
       APIClientManager.sharedInstance.postAPNToken(UserDefaultsManager.pushNotificationToken!)
     }
-
-    let urlPath = AppConfiguration.serverBaseURLViaSSL + "/webflow"
-    let url = NSURL(string: urlPath)!
-    let request = NSMutableURLRequest(URL: url)
-    
-    let loginString = NSString(format: "%@:%@", UserDefaultsManager.email!, UserDefaultsManager.password!)
-    let loginData: NSData = loginString.dataUsingEncoding(NSUTF8StringEncoding)!
-    let base64LoginString = loginData.base64EncodedStringWithOptions(nil)
-    request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
     
     webView = UIWebView()
     webView.frame = view.frame
-    webView.loadRequest(request)
     webView.delegate = self
-    
     view.addSubview(webView)
+    
+    let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+    hud.labelText = "Getting your location..."
+    hud.dimBackground = true
+    hud.removeFromSuperViewOnHide = true
+    
+    INTULocationManager.sharedInstance().requestLocationWithDesiredAccuracy(
+      .Neighborhood,
+      timeout: 10,
+      delayUntilAuthorized: true,
+      block: {
+        (currentLocation: CLLocation!, achievedAccuracy: INTULocationAccuracy, status: INTULocationStatus) in
+        
+        if status == .Success {
+          let coordinate = currentLocation.coordinate
+          self.loadWebView(addingToURL: "?latitude=\(coordinate.latitude)&longitude=\(coordinate.longitude)")
+        } else {
+          self.loadWebView()
+        }
+        
+        hud.hide(true)
+      }
+    )
+    
     
     let logoutGesture = UITapGestureRecognizer(target: self, action: "confirmLogOut")
     logoutGesture.numberOfTapsRequired = 5
@@ -53,9 +70,9 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
     webView.backgroundColor = UIColor(hexRGB: "28C9B6")
     
     var viewBounds = webView.bounds
-    viewBounds.origin.y = -20;
-    viewBounds.size.height = viewBounds.size.height + 20;
-    view.frame = viewBounds;
+    viewBounds.origin.y = -20
+    viewBounds.size.height = viewBounds.size.height + 20
+    view.frame = viewBounds
   }
   
   func confirmLogOut() {
@@ -69,6 +86,26 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
     alert.show()
   }
   
+  func loadWebView(addingToURL: String = "") {
+    var urlPath = AppConfiguration.serverBaseURLViaSSL + "/webflow" + addingToURL
+    let url = NSURL(string: urlPath)!
+    let request = NSMutableURLRequest(URL: url)
+    
+    let loginString = NSString(format: "%@:%@", UserDefaultsManager.email!, UserDefaultsManager.password!)
+    let loginData: NSData = loginString.dataUsingEncoding(NSUTF8StringEncoding)!
+    let base64LoginString = loginData.base64EncodedStringWithOptions(nil)
+    request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
+    
+    if requestsCount == 0 {
+      webViewProgressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
+      webViewProgressHUD.labelText = "Loading activities..."
+      webViewProgressHUD.dimBackground = true
+      webViewProgressHUD.removeFromSuperViewOnHide = true
+    }
+
+    webView.loadRequest(request)
+  }
+  
   // MARK: UIWebView Delegate Methods
   
   func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
@@ -76,6 +113,17 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
     return connection != nil
   }
   
+  func webViewDidStartLoad(webView: UIWebView) {
+  }
+  
+  func webViewDidFinishLoad(webView: UIWebView) {
+    if requestsCount == 0 {
+      webViewProgressHUD.hide(true)
+    }
+    
+    requestsCount += 1
+  }
+
   // MARK: NSURLConnection Delegate Methods
   
   func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {
