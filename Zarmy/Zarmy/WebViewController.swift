@@ -91,11 +91,15 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
     let url = NSURL(string: urlPath)!
     let request = NSMutableURLRequest(URL: url)
     
+    // AUTH
     let loginString = NSString(format: "%@:%@", UserDefaultsManager.email!, UserDefaultsManager.password!)
     let loginData: NSData = loginString.dataUsingEncoding(NSUTF8StringEncoding)!
     let base64LoginString = loginData.base64EncodedStringWithOptions(nil)
     request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
     
+    // INFO
+    request.setValue("true", forHTTPHeaderField: "X-Client-WebView")
+
     if requestsCount == 0 {
       webViewProgressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
       webViewProgressHUD.labelText = "Loading activities..."
