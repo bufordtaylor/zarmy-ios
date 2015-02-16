@@ -27,14 +27,18 @@ class AppConfiguration {
   
   // MARK: - Server URLs & API
   
+  class var serverHost: String {
+    return productionEnvironment ? "zarmy.club" : "zarmy.dev"
+  }
+
   class var serverBaseURL: String {
-    return productionEnvironment ? "http://zarmy.club" : "http://zarmy.dev"
+    return "http://\(serverHost)"
   }
   
   class var serverBaseURLViaSSL: String {
     // TODO: get SSL certificate
-//    return productionEnvironment ? "https://zarmy.club" : "http://zarmy.dev"
-    return productionEnvironment ? "http://zarmy.club" : "http://zarmy.dev"
+//    return "https://\(serverHost)"
+    return "http://\(serverHost)"
   }
   
   class var apiVersion: Int {

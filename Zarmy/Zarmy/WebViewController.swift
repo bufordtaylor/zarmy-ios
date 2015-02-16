@@ -100,13 +100,6 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
     // INFO
     request.setValue("true", forHTTPHeaderField: "X-Client-WebView")
 
-    if requestsCount == 0 {
-      webViewProgressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
-      webViewProgressHUD.labelText = "Loading activities..."
-      webViewProgressHUD.dimBackground = true
-      webViewProgressHUD.removeFromSuperViewOnHide = true
-    }
-
     webView.loadRequest(request)
   }
   
@@ -114,6 +107,14 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
   
   func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
     let connection = NSURLConnection(request: request, delegate: self)
+    
+    if request.URL.host == AppConfiguration.serverHost {
+      webViewProgressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
+      webViewProgressHUD.labelText = "Loading..."
+      webViewProgressHUD.dimBackground = true
+      webViewProgressHUD.removeFromSuperViewOnHide = true
+    }
+    
     return connection != nil
   }
   
@@ -121,7 +122,8 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
   }
   
   func webViewDidFinishLoad(webView: UIWebView) {
-    if requestsCount == 0 {
+    
+    if webViewProgressHUD != nil {
       webViewProgressHUD.hide(true)
     }
     
