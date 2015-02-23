@@ -8,11 +8,11 @@
 
 import CoreLocation
 
-class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebViewDelegate, NSURLConnectionDelegate, OSKActivityCustomizations {
+class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebViewDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate, OSKActivityCustomizations {
   
   var webView: UIWebView!
-  var requestsCount: Int = 0
   var webViewProgressHUD: MBProgressHUD!
+  var webData: NSMutableData!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -99,16 +99,18 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
     
     // INFO
     request.setValue("true", forHTTPHeaderField: "X-Client-WebView")
-
-    webView.loadRequest(request)
+    
+    webData = NSMutableData()
+    NSURLConnection(request: request, delegate: self, startImmediately: true)
   }
+  
   
   // MARK: UIWebView Delegate Methods
   
   func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-    
+
     if request.URL.scheme == "zarmy-native" {
-      
+
       if request.URL.host == nil {
         NSLog("Empty native action for URL: %@", request.URL)
         return false
@@ -128,42 +130,46 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
       }
       return false
     }
-
-    let connection = NSURLConnection(request: request, delegate: self)
     
-    if request.URL.host == AppConfiguration.serverHost {
-      webViewProgressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
-      webViewProgressHUD.labelText = "Loading..."
-      webViewProgressHUD.dimBackground = true
-      webViewProgressHUD.removeFromSuperViewOnHide = true
-    }
+    return true
     
-    return connection != nil
   }
   
   func webViewDidStartLoad(webView: UIWebView) {
+    if webView.request != nil {
+      showPageLoadingHUD(webView.request!)
+    }
   }
   
   func webViewDidFinishLoad(webView: UIWebView) {
-    
-    if webViewProgressHUD != nil {
-      webViewProgressHUD.hide(true)
-    }
-    
-    requestsCount += 1
+    hidePageLoadingHUD()
   }
 
   // MARK: NSURLConnection Delegate Methods
   
+  func connection(connection: NSURLConnection, willSendRequest request: NSURLRequest, redirectResponse response: NSURLResponse?) -> NSURLRequest? {
+    showPageLoadingHUD(request)
+    return request
+  }
+  
+  
+  func connection(connection: NSURLConnection, didReceiveData data: NSData) {
+    webData.appendData(data)
+  }
+  
   func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {
+
     let httpResponse = response as NSHTTPURLResponse
     if httpResponse.statusCode == 401 || httpResponse.statusCode == 403 {
       UserDefaultsManager.logOut()
       navigationController!.popViewControllerAnimated(true)
+    } else {
+      webView.loadData(webData, MIMEType: "text/html", textEncodingName: "UTF-8", baseURL: response.URL)
     }
-
+    
+    hidePageLoadingHUD()
+    
   }
-  
   
   // MARK: - UIAlertView Delegate Methods
   
@@ -182,6 +188,26 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
       }
       
     } // switch AlertTags
+  }
+  
+  // MARK: - Helpers
+  
+  // Loading HUD
+  
+  func showPageLoadingHUD(request: NSURLRequest) {
+    
+    hidePageLoadingHUD()
+    
+    if request.URL.host == AppConfiguration.serverHost {
+      webViewProgressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
+      webViewProgressHUD.labelText = "Loading..."
+      webViewProgressHUD.dimBackground = true
+      webViewProgressHUD.removeFromSuperViewOnHide = true
+    }
+  }
+  
+  func hidePageLoadingHUD(){
+    webViewProgressHUD?.hide(true)
   }
   
   // Sharing
@@ -208,7 +234,6 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
     
     return OSKApplicationCredential()
   }
-
   
   // MARK: - Enums
   
