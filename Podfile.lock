@@ -1,4 +1,5 @@
 PODS:
+  - ADNLogin (2.1.0)
   - AFNetworking (2.5.1):
     - AFNetworking/NSURLConnection (= 2.5.1)
     - AFNetworking/NSURLSession (= 2.5.1)
@@ -31,6 +32,11 @@ PODS:
   - Mixpanel (2.7.2):
     - Mixpanel/MPCategoryHelpers (= 2.7.2)
   - Mixpanel/MPCategoryHelpers (2.7.2)
+  - OvershareKit (1.3.1):
+    - ADNLogin
+    - PocketAPI
+  - PocketAPI (1.0.3)
+  - RequestUtils (1.1)
 
 DEPENDENCIES:
   - AFNetworking
@@ -39,8 +45,21 @@ DEPENDENCIES:
   - INTULocationManager
   - MBProgressHUD
   - Mixpanel
+  - OvershareKit (from `https://github.com/overshare/overshare-kit.git`, commit `d04ef7f660c807e075a3734c970f1a42ebd08812`)
+  - RequestUtils
+
+EXTERNAL SOURCES:
+  OvershareKit:
+    :commit: d04ef7f660c807e075a3734c970f1a42ebd08812
+    :git: https://github.com/overshare/overshare-kit.git
+
+CHECKOUT OPTIONS:
+  OvershareKit:
+    :commit: d04ef7f660c807e075a3734c970f1a42ebd08812
+    :git: https://github.com/overshare/overshare-kit.git
 
 SPEC CHECKSUMS:
+  ADNLogin: 3828c000fa246c7340b331ed5c336fca8dfe6a1d
   AFNetworking: 8bee59492a6ff15d69130efa4d0dc67e0094a52a
   Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
   Facebook-iOS-SDK: 3d65f685348b789e46a9aacf92bfa85b60b63755
@@ -48,5 +67,8 @@ SPEC CHECKSUMS:
   INTULocationManager: 83bec34472a706e178face50a4e5e21ca986b7d2
   MBProgressHUD: 2038dbcf3dce73215abed6001657043d53aa79a8
   Mixpanel: def38b9e600f101686b8d647e05660a72c089c65
+  OvershareKit: dec4cf8ee6f81abe9e1a49b7ef8dd55c64bc1b7b
+  PocketAPI: c83bd3fc1916d5acab274efeb90171ba1184265d
+  RequestUtils: 3ea776d3ecc0370dd35cd90aef8319cdb741dae9
 
 COCOAPODS: 0.35.0

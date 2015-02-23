@@ -510,7 +510,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "92cd9eb9-cc86-46b0-9497-74274bd8662a";
+				PROVISIONING_PROFILE = "a25a49a2-b48a-426c-9ba0-0dbdbbf117de";
 				SWIFT_OBJC_BRIDGING_HEADER = "Zarmy/Zarmy-Bridging-Header.h";
 			};
 			name = Release;

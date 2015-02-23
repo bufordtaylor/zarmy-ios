@@ -8,7 +8,7 @@
 
 import CoreLocation
 
-class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebViewDelegate, NSURLConnectionDelegate {
+class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebViewDelegate, NSURLConnectionDelegate, OSKActivityCustomizations {
   
   var webView: UIWebView!
   var requestsCount: Int = 0
@@ -106,6 +106,29 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
   // MARK: UIWebView Delegate Methods
   
   func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    
+    if request.URL.scheme == "zarmy-native" {
+      
+      if request.URL.host == nil {
+        NSLog("Empty native action for URL: %@", request.URL)
+        return false
+      }
+      
+      let getParams = request.GETParameters() as? [String: String]
+      
+      switch request.URL.host! {
+      case "share-message":
+        if getParams?["message"] != nil {
+          shareMessage(getParams!["message"]!)
+        }
+      case "logout":
+        confirmLogOut()
+      default:
+        NSLog("Unknown native action for URL: %@", request.URL)
+      }
+      return false
+    }
+
     let connection = NSURLConnection(request: request, delegate: self)
     
     if request.URL.host == AppConfiguration.serverHost {
@@ -159,6 +182,31 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
       }
       
     } // switch AlertTags
+  }
+  
+  // Sharing
+  
+  func shareMessage(message: String) {
+    
+    let activitiesManager = OSKActivitiesManager.sharedInstance()
+    
+    activitiesManager.customizationsDelegate = self
+    
+    activitiesManager.markActivityTypes([OSKActivityType_iOS_ReadingList, OSKActivityType_iOS_CopyToPasteboard, OSKActivityType_iOS_Safari, OSKActivityType_iOS_SaveToCameraRoll, OSKActivityType_SDK_Pocket, OSKActivityType_URLScheme_Chrome, OSKActivityType_URLScheme_Drafts, OSKActivityType_URLScheme_Instagram, OSKActivityType_URLScheme_Omnifocus, OSKActivityType_URLScheme_Riposte, OSKActivityType_URLScheme_Things, OSKActivityType_iOS_AirDrop, OSKActivityType_API_Readability, OSKActivityType_API_Pocket, OSKActivityType_API_Pinboard, OSKActivityType_API_Instapaper, OSKActivityType_API_AppDotNet, OSKActivityType_API_500Pixels, OSKActivityType_API_GooglePlus], alwaysExcluded: true)
+    
+    let share = OSKShareableContent(fromText: message)
+    let presManager = OSKPresentationManager.sharedInstance()
+    
+    presManager.presentActivitySheetForContent(share, presentingViewController: self, options: nil)
+  }
+  
+  func applicationCredentialForActivityType(activityType: String!) -> OSKApplicationCredential! {
+    
+    if activityType == OSKActivityType_iOS_Facebook {
+      return OSKApplicationCredential(overshareApplicationKey: "717974991663888", applicationSecret: nil, appName: "Facebook")
+    }
+    
+    return OSKApplicationCredential()
   }
 
   
