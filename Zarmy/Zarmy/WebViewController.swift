@@ -203,6 +203,7 @@ class WebViewController: GAITrackedViewController, UIAlertViewDelegate, UIWebVie
       webViewProgressHUD.labelText = "Loading..."
       webViewProgressHUD.dimBackground = true
       webViewProgressHUD.removeFromSuperViewOnHide = true
+      webViewProgressHUD.hide(false, afterDelay: 5)
     }
   }
   
